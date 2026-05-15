@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /recommendations
+
+Sitemap: https://haphrus.com/sitemap.xml
