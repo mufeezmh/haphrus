@@ -17,7 +17,8 @@ const Register = () => {
       localStorage.setItem('user', JSON.stringify(res.data.user));
       navigate('/');
     } catch (err) {
-      alert('Registration failed: ' + err.response.data.message);
+      const message = err.response?.data?.message || 'Unable to connect to server. Please try again.';
+      alert('Registration failed: ' + message);
     }
   };
 

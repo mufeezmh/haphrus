@@ -16,7 +16,13 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ message: 'Error registering user', error: error.message });
+    if (error.name === 'MongooseServerSelectionError' || error.name === 'MongoServerSelectionError') {
+      res.status(503).json({ message: 'Database connection error. Please try again later.' });
+    } else if (error.code === 11000) {
+      res.status(400).json({ message: 'An account with this email already exists.' });
+    } else {
+      res.status(500).json({ message: 'Registration failed. Please try again.' });
+    }
   }
 });
 
